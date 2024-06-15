@@ -7,6 +7,7 @@ import Model.Model_File_Sender;
 import Model.Model_Receive_Message;
 import Model.Model_Send_Message;
 import Model.Model_User_Account;
+import View.Chat_Body;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -25,7 +26,7 @@ public class Service {
     private Model_User_Account user;
     private List<Model_File_Sender> fileSender;
     private List<Model_File_Receiver> fileReceiver;
-
+    private Chat_Body body;
     public static Service getInstance() {
         if (instance == null) {
             instance = new Service();
@@ -73,9 +74,15 @@ public class Service {
                 @Override
                 public void call(Object... os) {
                     Model_Receive_Message message = new Model_Receive_Message(os[0]);
+                    System.out.println(message.getText());
+                    System.out.println(message.getFromUserID());
                     PublicEvent.getInstance().getEventChat().receiveMessage(message);
+                 
                 }
             });
+             
+             
+            
             client.open();
         } catch (URISyntaxException e) {
             error(e);
@@ -115,7 +122,8 @@ public class Service {
             data.initReceive();
         }
     }
-
+    
+    
     public Socket getClient() {
         return client;
     }

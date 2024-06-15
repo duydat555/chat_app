@@ -10,6 +10,7 @@ public class Home extends javax.swing.JLayeredPane {
     public Home() {
         initComponents();
         init();
+        reset();
     }
 
     private void init() {
@@ -19,17 +20,23 @@ public class Home extends javax.swing.JLayeredPane {
         this.add(chat);
         this.add(new Menu_Right());
         chat.setVisible(false);
+        reset();
     }
 
     public void setUser(Model_User_Account user) {
         chat.setUser(user);
         chat.setVisible(true);
+        reset();
     }
 
     public void updateUser(Model_User_Account user) {
         chat.updateUser(user);
+        reset();
     }
-
+    public void reset() {
+        repaint();
+        revalidate();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

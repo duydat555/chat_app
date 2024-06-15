@@ -34,6 +34,7 @@ public class Login extends javax.swing.JPanel {
                                         Service.getInstance().setUser(new Model_User_Account(os[1]));
                                         PublicEvent.getInstance().getEventMain().showLoading(false);
                                         PublicEvent.getInstance().getEventMain().initChat();
+                                        
                                     } else {
                                         //  password wrong
                                         PublicEvent.getInstance().getEventMain().showLoading(false);

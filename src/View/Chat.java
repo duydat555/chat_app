@@ -8,17 +8,24 @@ import Controller.PublicEvent;
 import Model.Model_Receive_Message;
 import Model.Model_Send_Message;
 import Model.Model_User_Account;
+import java.util.ArrayList;
+import java.util.List;
 import net.miginfocom.swing.MigLayout;
 
 public class Chat extends javax.swing.JPanel {
 
+  
     private Chat_Title chatTitle;
     private Chat_Body chatBody;
     private Chat_Bottom chatBottom;
+    private Model_User_Account user;
+    private List<Model_Receive_Message> pendingMessages;
 
     public Chat() {
-        initComponents();
+         initComponents();
         init();
+        pendingMessages = new ArrayList<>();
+        clearChat();
     }
 
     private void init() {
@@ -29,31 +36,53 @@ public class Chat extends javax.swing.JPanel {
         PublicEvent.getInstance().addEventChat(new EventChat() {
             @Override
             public void sendMessage(Model_Send_Message data) {
+                // Display message sent by current user
                 chatBody.addItemRight(data);
             }
 
             @Override
             public void receiveMessage(Model_Receive_Message data) {
-                if (chatTitle.getUser().getUserID() == data.getFromUserID()) {
+                // Display message received from other user
+                if (user != null && chatTitle.getUser() != null && chatTitle.getUser().getUserID() == data.getFromUserID()) {
                     chatBody.addItemLeft(data);
+                    clearChat();
+                } else {
+                    pendingMessages.add(data);
                 }
             }
         });
         add(chatTitle, "wrap");
         add(chatBody, "wrap");
         add(chatBottom, "h ::50%");
+        clearChat();
     }
 
     public void setUser(Model_User_Account user) {
+        this.user = user;
         chatTitle.setUserName(user);
         chatBottom.setUser(user);
         chatBody.clearChat();
+
+        // Display pending messages from other users
+        for (Model_Receive_Message message : pendingMessages) {
+            if (chatTitle != null && chatTitle.getUser() != null && chatTitle.getUser().getUserID() == message.getFromUserID()) {
+                chatBody.addItemLeft(message);
+            }
+        }
+        //pendingMessages.clear();
+        clearChat();
     }
 
     public void updateUser(Model_User_Account user) {
         chatTitle.updateUser(user);
+        clearChat();
     }
-    
+
+    public void clearChat() {
+        repaint();
+        revalidate();
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

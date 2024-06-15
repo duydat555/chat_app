@@ -14,7 +14,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class Chat_Body extends javax.swing.JPanel {
 
-    public Chat_Body() {
+       public Chat_Body() {
         initComponents();
         init();
     }

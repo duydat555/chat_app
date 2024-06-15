@@ -200,6 +200,7 @@ public class Menu_Left extends javax.swing.JPanel {
             menuGroup.setSelected(false);
             menuBox.setSelected(false);
             showMessage();
+            refreshMenuList();
         }
     }//GEN-LAST:event_menuMessageActionPerformed
 
@@ -209,6 +210,7 @@ public class Menu_Left extends javax.swing.JPanel {
             menuGroup.setSelected(true);
             menuBox.setSelected(false);
             showGroup();
+            refreshMenuList();
         }
     }//GEN-LAST:event_menuGroupActionPerformed
 
@@ -218,6 +220,7 @@ public class Menu_Left extends javax.swing.JPanel {
             menuGroup.setSelected(false);
             menuBox.setSelected(true);
             showBox();
+            refreshMenuList();
         }
     }//GEN-LAST:event_menuBoxActionPerformed
 
